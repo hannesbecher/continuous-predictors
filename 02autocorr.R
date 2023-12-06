@@ -36,16 +36,19 @@ hist(resid(gam00), add=T, col ="#FF000030")
 acf(nnnn$l10X0)
 
 # autocorrelation arises from smothong window analyses
-rr <- rnorm(1000)
-
+nn <- 1000
+rr <- rnorm(nn)
+acf(rr)
 ?Matrix::band
-mat <- band(matrix(1, nrow(nnnn), nrow(nnnn)), -20, 20)
-plot(mat %*% nnnn$pi0)
-overlapping <- as.vector(mat %*% nnnn$pi0)
-nonOverlapping <- overlapping[seq(1, 1565, by=42)]
+mat <- Matrix::band(matrix(1, nn, nn), -20, 20)
+
+plot(rr)
+points((mat %*% rr)/41, pch=2, col=2)
+overlapping <- as.vector(mat %*% rr)
+nonOverlapping <- overlapping[seq(1, nn, by=42)]
 
 acf(overlapping)
 acf(nonOverlapping)
-acf(nnnn$pi0)
+
 plot(overlapping/41)
 plot(nonOverlapping/41)
